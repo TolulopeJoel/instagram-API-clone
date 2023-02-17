@@ -16,3 +16,17 @@ class Post(models.Model):
     
     def __str__(self):
         return self.caption
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+    )
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+    text = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
