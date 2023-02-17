@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # local apps
     'posts.apps.PostsConfig',
+    'comments.apps.CommentsConfig',
     
     # 3rd party apps
     'rest_framework',
