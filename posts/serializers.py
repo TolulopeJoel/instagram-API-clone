@@ -1,13 +1,9 @@
 from rest_framework import serializers
 
-from .models import Post
 from comments.serializers import CommentListSerializer
 
-
-class UserPublicSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    username = serializers.CharField(read_only=True)
-    full_name = serializers.CharField(source='get_full_name', read_only=True)
+from .models import Post
+from .public_serializers import UserPublicSerializer
 
 
 class PostListSerializer(serializers.ModelSerializer):
@@ -34,6 +30,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
+            'id',
             'user',
             'image',
             'caption',
