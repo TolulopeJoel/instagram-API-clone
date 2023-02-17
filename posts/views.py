@@ -1,23 +1,27 @@
 from rest_framework import generics
-from rest_framework import viewsets
 
 from .models import Post, Comment
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import (
+    PostListSerializer, PostDetailSerializer,
+    CommentListSerializer, CommentDetailSerializer
+)
 
 
-class PostViewset(viewsets.ModelViewSet):
+class PostListView(generics.ListAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    
-    def perform_create(self, serializer):
-        user = self.request.user
-        return serializer.save(user=user)
+    serializer_class = PostListSerializer
 
 
-class CommentViewset(viewsets.ModelViewSet):
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
+
+
+class CommentListView(generics.ListAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-    
-    def perform_create(self, serializer):
-        user = self.request.user
-        return serializer.save(user=user)
+    serializer_class = CommentListSerializer
+
+
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentDetailSerializer

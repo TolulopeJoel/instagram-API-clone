@@ -9,7 +9,7 @@ class UserPublicSerializer(serializers.Serializer):
     full_name = serializers.CharField(source='get_full_name', read_only=True)
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentListSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
@@ -21,9 +21,20 @@ class CommentSerializer(serializers.ModelSerializer):
         )
 
 
-class PostSerializer(serializers.ModelSerializer):
+class CommentDetailSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = (
+            'id',
+            'user',
+            'text',
+        )
+
+
+class PostListSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
-    comments = CommentSerializer(many=True)
     url = serializers.HyperlinkedIdentityField(
         view_name='posts-detail',
         lookup_field ='pk',
@@ -36,5 +47,18 @@ class PostSerializer(serializers.ModelSerializer):
             'image',
             'caption',
             'url',
+        )
+
+
+class PostDetailSerializer(serializers.ModelSerializer):
+    user = UserPublicSerializer(read_only=True)
+    comments = CommentListSerializer(many=True)
+
+    class Meta:
+        model = Post
+        fields = (
+            'user',
+            'image',
+            'caption',
             'comments',
         )
