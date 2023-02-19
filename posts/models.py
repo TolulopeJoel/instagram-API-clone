@@ -16,3 +16,13 @@ class Post(models.Model):
     
     def __str__(self):
         return self.caption
+
+
+class Like(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post,
+        related_name='likes',
+        on_delete=models.CASCADE,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
