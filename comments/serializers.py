@@ -7,12 +7,14 @@ from .models import Comment
 
 class CommentListSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
+    post = serializers.CharField(read_only=True)
 
     class Meta:
         model = Comment
         fields = (
             'id',
             'user',
+            'post',
             'text',
         )
 
