@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'comments.apps.CommentsConfig',
     
     # 3rd party apps
+    'django_filters',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -134,6 +135,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Rest Framework
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
