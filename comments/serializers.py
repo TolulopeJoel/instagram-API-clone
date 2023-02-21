@@ -6,16 +6,19 @@ from .models import Comment
 
 
 class CommentListSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
-    post = serializers.CharField(read_only=True)
+    user = UserPublicSerializer(read_only=True)
+    detail_url = serializers.HyperlinkedIdentityField(
+        view_name='comments-detail',
+        lookup_field ='pk',
+    )
 
     class Meta:
         model = Comment
         fields = (
             'id',
             'user',
-            'post',
             'text',
+            'detail_url',
         )
 
 

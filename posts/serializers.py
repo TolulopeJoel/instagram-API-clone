@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from comments.serializers import CommentListSerializer
 
-from .models import Post
+from .models import Post, Like
 from .public_serializers import UserPublicSerializer
 
 
@@ -25,7 +25,8 @@ class PostListSerializer(serializers.ModelSerializer):
 
 class PostDetailSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
-    comments = CommentListSerializer(many=True)
+    image = serializers.ImageField(read_only=True)
+    comments = CommentListSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
@@ -36,3 +37,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
             'caption',
             'comments',
         )
+        
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ['id', 'user', 'post', 'created_at']
