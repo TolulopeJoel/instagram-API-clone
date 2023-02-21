@@ -1,9 +1,14 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 
+from accounts.mixins import UserQuerySetMixin
+
 from .filters import PostFilter
-from .models import Post, Like
-from .serializers import LikeSerializer, PostDetailSerializer, PostListSerializer
+from .models import Like, Post
+from .serializers import (
+    PostDetailSerializer,PostListSerializer,
+    LikeSerializer, 
+)
 
 
 class PostListView(generics.ListCreateAPIView):
@@ -12,7 +17,7 @@ class PostListView(generics.ListCreateAPIView):
     filterset_class = PostFilter
 
 
-class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+class PostDetailView(UserQuerySetMixin, generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
 
@@ -34,6 +39,6 @@ class LikeListView(generics.ListCreateAPIView):
         return Response(LikeSerializer(like).data, status=status.HTTP_201_CREATED)
 
 
-class LikeDetailView(generics.RetrieveDestroyAPIView):
+class LikeDetailView(UserQuerySetMixin, generics.RetrieveDestroyAPIView):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer

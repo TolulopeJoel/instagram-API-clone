@@ -39,6 +39,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
         )
         
 class LikeSerializer(serializers.ModelSerializer):
+    user = UserPublicSerializer(read_only=True)
+
     class Meta:
         model = Like
         fields = ['id', 'user', 'post', 'created_at']
