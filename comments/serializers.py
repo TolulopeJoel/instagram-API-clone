@@ -21,6 +21,10 @@ class CommentListSerializer(serializers.ModelSerializer):
             'detail_url',
         )
 
+    def to_representation(self, instance):
+        self.context['request'] = self.context.get('request')
+        return super().to_representation(instance)
+
 
 class CommentDetailSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
