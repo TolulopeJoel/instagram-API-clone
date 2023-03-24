@@ -37,7 +37,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
             'caption',
             'comments',
         )
-        
+
+
 class LikeSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
 

@@ -6,8 +6,8 @@ from accounts.mixins import UserQuerySetMixin
 from .filters import PostFilter
 from .models import Like, Post
 from .serializers import (
-    PostDetailSerializer,PostListSerializer,
-    LikeSerializer, 
+    PostDetailSerializer, PostListSerializer,
+    LikeSerializer,
 )
 
 
@@ -15,6 +15,10 @@ class PostListView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostListSerializer
     filterset_class = PostFilter
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        return serializer.save(user=user)
 
 
 class PostDetailView(UserQuerySetMixin, generics.RetrieveUpdateDestroyAPIView):
