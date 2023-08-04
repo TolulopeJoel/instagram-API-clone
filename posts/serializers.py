@@ -9,8 +9,8 @@ from .public_serializers import UserPublicSerializer
 class PostListSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     url = serializers.HyperlinkedIdentityField(
-        view_name='posts-detail',
-        lookup_field ='pk',
+        view_name='post-detail',
+        lookup_field='pk',
     )
 
     class Meta:
